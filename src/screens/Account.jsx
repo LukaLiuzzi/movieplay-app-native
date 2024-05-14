@@ -1,0 +1,117 @@
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+function AccountScreen() {
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+        }}>
+        <Image
+          source={require('../../assets/accountAvatar.png')}
+          style={styles.avatar}
+        />
+        <Ionicons
+          name="camera"
+          size={24}
+          color="#262626"
+          style={{marginLeft: -20, zIndex: 1}}
+        />
+      </View>
+
+      <Text style={styles.username}>Antogace</Text>
+
+      <View style={styles.buttonsView}>
+        <TouchableOpacity style={styles.button}>
+          <View style={styles.button}>
+            <View style={styles.buttonsContainer}>
+              <Ionicons
+                name="arrow-redo-circle-outline"
+                size={24}
+                color="#262626"
+              />
+              <Text>Editar cuenta</Text>
+            </View>
+            <Ionicons name="add-circle-outline" size={24} color="#262626" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <View style={styles.button}>
+            <View style={styles.buttonsContainer}>
+              <Ionicons name="language" size={24} color="#262626" />
+              <Text>Lenguaje</Text>
+            </View>
+            <Text>Espanol</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.buttonsView}>
+        <TouchableOpacity style={styles.button}>
+          <View style={styles.button}>
+            <View style={styles.buttonsContainer}>
+              <Ionicons name="exit-outline" size={24} color="#262626" />
+              <Text>Cerrar sesion</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <View style={styles.button}>
+            <View style={styles.buttonsContainer}>
+              <Ionicons name="trash-outline" size={24} color="#262626" />
+              <Text style={{color: 'red'}}>Eliminar cuenta</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#C1DCF2',
+    paddingHorizontal: 30,
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    marginTop: 40,
+  },
+  username: {
+    fontSize: 22,
+    color: '#262626',
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 40,
+  },
+  buttonsView: {
+    width: '100%',
+    backgroundColor: '#fff',
+    padding: 20,
+    color: '#262626',
+    marginBottom: 10,
+    borderRadius: 10,
+    gap: 10,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  button: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    gap: 10,
+  },
+});
+
+export default AccountScreen;
