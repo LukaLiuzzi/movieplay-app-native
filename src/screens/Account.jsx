@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-function AccountScreen() {
+function AccountScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View
@@ -25,7 +25,9 @@ function AccountScreen() {
       <Text style={styles.username}>Antogace</Text>
 
       <View style={styles.buttonsView}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('EditAccount')}>
           <View style={styles.button}>
             <View style={styles.buttonsContainer}>
               <Ionicons

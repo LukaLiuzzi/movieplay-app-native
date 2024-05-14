@@ -8,6 +8,7 @@ import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesignicons from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityicons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AccountNavigation from './AccountNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -86,8 +87,8 @@ function TabNavigation() {
         }}
       />
       <Tab.Screen
-        name="Account"
-        component={AccountScreen}
+        name="AccountNavigation"
+        component={AccountNavigation}
         options={{
           headerShown: true,
           headerTitle: 'Editar Cuenta',
