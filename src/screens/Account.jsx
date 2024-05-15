@@ -1,5 +1,12 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 function AccountScreen({navigation}) {
@@ -52,7 +59,28 @@ function AccountScreen({navigation}) {
       </View>
 
       <View style={styles.buttonsView}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            Alert.alert(
+              'Cerrar sesion',
+              '¿Estas seguro de que deseas cerrar tu sesion?',
+              [
+                {
+                  text: 'Cancelar',
+                  style: 'cancel',
+                },
+                {
+                  text: 'Confirmar',
+                  style: 'destructive',
+                  onPress: () => {
+                    // TODO: Delete account and navigate to LoginScreen
+                    navigation.replace('Login');
+                  },
+                },
+              ],
+            );
+          }}>
           <View style={styles.button}>
             <View style={styles.buttonsContainer}>
               <Ionicons name="exit-outline" size={24} color="#262626" />
@@ -60,7 +88,28 @@ function AccountScreen({navigation}) {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            Alert.alert(
+              'Eliminar cuenta',
+              '¿Estas seguro de deseas eliminar tu cuenta?',
+              [
+                {
+                  text: 'Cancelar',
+                  style: 'cancel',
+                },
+                {
+                  text: 'Confirmar',
+                  style: 'destructive',
+                  onPress: () => {
+                    // TODO: Delete account and navigate to LoginScreen
+                    navigation.replace('Login');
+                  },
+                },
+              ],
+            );
+          }}>
           <View style={styles.button}>
             <View style={styles.buttonsContainer}>
               <Ionicons name="trash-outline" size={24} color="#262626" />

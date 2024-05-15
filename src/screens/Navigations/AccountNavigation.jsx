@@ -12,7 +12,20 @@ function AccountNavigation() {
         name="Account"
         component={AccountScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerTitle: 'Editar Cuenta',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#C1DCF2',
+            height: 101,
+          },
+          headerTintColor: '#0B3750',
+          headerTitleStyle: {
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            width: '100%',
+          },
         }}
       />
       <Stack.Screen
@@ -20,7 +33,19 @@ function AccountNavigation() {
         component={EditAccount}
         options={{
           headerShown: true,
-          headerTitle: 'Editar Perfil',
+          headerTitle: 'Editar Cuenta',
+          headerStyle: {
+            backgroundColor: '#C1DCF2',
+            height: 101,
+          },
+          headerTintColor: '#0B3750',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            width: '100%',
+          },
         }}
       />
     </Stack.Navigator>

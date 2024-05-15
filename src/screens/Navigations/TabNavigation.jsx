@@ -90,19 +90,7 @@ function TabNavigation() {
         name="AccountNavigation"
         component={AccountNavigation}
         options={{
-          headerShown: true,
-          headerTitle: 'Editar Cuenta',
-          headerStyle: {
-            backgroundColor: '#C1DCF2',
-            height: 101,
-          },
-          headerTintColor: '#0B3750',
-          headerTitleStyle: {
-            fontSize: 30,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            width: '100%',
-          },
+          headerShown: false,
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityicons
               name="account-circle-outline"
