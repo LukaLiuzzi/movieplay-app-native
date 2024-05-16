@@ -29,15 +29,18 @@ const SplashScreen = ({navigation}) => {
   };
 
   const handleSkip = () => {
-    if (swiperRef.current) {
-      setIsLastSlide(true);
-      swiperRef.current.scrollBy(2, true);
+    // if (swiperRef.current) {
+    //   setIsLastSlide(true);
+    //   swiperRef.current.scrollBy(2, true);
+    // }
+    if (navigation) {
+      navigation.replace('Tab');
     }
   };
 
   return (
     <LinearGradient
-      colors={['#C1DCF2', '#3A7CA5', '#6C9BC1']}
+      colors={['#C1DCF2', '#6C9BC1', '#3A7CA5']}
       style={styles.container}>
       <Swiper
         ref={swiperRef}

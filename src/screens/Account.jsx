@@ -74,8 +74,8 @@ function AccountScreen({navigation}) {
                   text: 'Confirmar',
                   style: 'destructive',
                   onPress: () => {
-                    // TODO: Delete account and navigate to LoginScreen
-                    navigation.replace('Login');
+                    // TODO: Delete account
+                    navigation.replace('Close', {action: 'close'});
                   },
                 },
               ],
@@ -103,8 +103,8 @@ function AccountScreen({navigation}) {
                   text: 'Confirmar',
                   style: 'destructive',
                   onPress: () => {
-                    // TODO: Delete account and navigate to LoginScreen
-                    navigation.replace('Login');
+                    // TODO: Delete account
+                    navigation.navigate('Close', {action: 'delete'});
                   },
                 },
               ],

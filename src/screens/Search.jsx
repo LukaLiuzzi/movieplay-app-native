@@ -1,11 +1,28 @@
+import React, {useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {theme} from '../theme/theme';
 import SearchBar from '../components/SearchBar';
 
-function SearchScreen() {
+function SearchScreen({navigation}) {
+  const [search, setSearch] = useState('');
+  const handleChange = text => {
+    setSearch(text);
+  };
+
+  const handleSearchPress = () => {
+    navigation.navigate('SearchResults', {search});
+  };
+
   return (
-    <View style={theme.container}>
-      <SearchBar />
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: '#C1DCF2',
+        alignItems: 'center',
+      }}>
+      <SearchBar
+        handleChange={handleChange}
+        handleSearchPress={handleSearchPress}
+      />
       <Image
         source={require('../../assets/Not_Found_illustration.png')}
         style={styles.image}

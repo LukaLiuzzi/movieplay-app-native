@@ -9,8 +9,8 @@ function App() {
     <SafeAreaView style={{flex: 1}}>
       <NavigationContainer>
         <StatusBar barStyle="dark-content" backgroundColor="#3A7CA5" />
-        {/* <StackNavigation /> */}
-        <TabNavigation />
+        <StackNavigation />
+        {/* <TabNavigation /> */}
       </NavigationContainer>
     </SafeAreaView>
   );

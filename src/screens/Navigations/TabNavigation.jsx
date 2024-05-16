@@ -1,14 +1,13 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../Home';
-import SearchScreen from '../Search';
 import FavoritesScreen from '../Favorites';
-import AccountScreen from '../Account';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesignicons from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AccountNavigation from './AccountNavigation';
+import SearchNavigation from './SearchNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,9 +52,9 @@ function TabNavigation() {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={SearchNavigation}
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: 'Busqueda',
           headerStyle: {
             backgroundColor: '#C1DCF2',

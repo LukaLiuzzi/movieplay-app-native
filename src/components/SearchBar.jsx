@@ -1,18 +1,35 @@
 import React from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {Pressable, StyleSheet, TextInput, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const SearchBar = () => {
+const SearchBar = ({
+  handleChange,
+  handleSearchPress,
+  showSearchBtn = true,
+  showFilterBtn = false,
+  search,
+  handleFilterPress,
+}) => {
   return (
     <View style={styles.navigationContainer}>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Buscar por titulo o elenco"
           style={styles.input}
+          value={search}
+          onChangeText={text => handleChange(text)}
         />
-        <Ionicons name="search" size={32} color="#3A7CA5" />
+        {showSearchBtn && (
+          <Pressable onPress={() => handleSearchPress()}>
+            <Ionicons name="search" size={32} color="#3A7CA5" />
+          </Pressable>
+        )}
       </View>
-      <Ionicons name="filter" size={32} color="#3A7CA5" />
+      {showFilterBtn && (
+        <Pressable onPress={() => handleFilterPress()}>
+          <Ionicons name="filter" size={32} color="#3A7CA5" />
+        </Pressable>
+      )}
     </View>
   );
 };

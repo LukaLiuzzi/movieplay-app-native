@@ -1,16 +1,16 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AccountScreen from '../Account';
-import EditAccount from '../account/EditAccount';
-import Close from '../account/Close';
+import SearchScreen from '../Search';
+import SearchResults from '../search/SearchResults';
+import Filters from '../search/Filters';
 
 const Stack = createNativeStackNavigator();
 
-function AccountNavigation() {
+function SearchNavigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTitle: 'Editar Cuenta',
+        headerTitle: 'Busqueda',
         headerTitleAlign: 'center',
         headerShadowVisible: false,
         headerStyle: {
@@ -25,17 +25,22 @@ function AccountNavigation() {
           width: '100%',
         },
       }}>
-      <Stack.Screen name="Account" component={AccountScreen} />
-      <Stack.Screen name="EditAccount" component={EditAccount} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen
-        name="Close"
-        component={Close}
+        name="SearchResults"
+        component={SearchResults}
         options={{
-          headerShown: false,
+          headerTitle: 'Resultados de la busqueda',
+          headerTitleStyle: {fontSize: 24, fontWeight: 'bold'},
         }}
+      />
+      <Stack.Screen
+        name="Filters"
+        component={Filters}
+        options={{headerTitle: 'Ordernar por'}}
       />
     </Stack.Navigator>
   );
 }
 
-export default AccountNavigation;
+export default SearchNavigation;

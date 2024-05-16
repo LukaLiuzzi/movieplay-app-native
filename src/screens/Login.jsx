@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 function LoginScreen({navigation}) {
   return (
     <LinearGradient
-      colors={['#C1DCF2', '#3A7CA5', '#6C9BC1']}
+      colors={['#C1DCF2', '#6C9BC1', '#3A7CA5']}
       style={styles.background}>
       <View style={styles.container}>
         <Image
