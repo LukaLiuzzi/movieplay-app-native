@@ -1,11 +1,44 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {fetchLogin} from '../redux/slices/authSlice';
+import {useDispatch} from 'react-redux';
+
+const CLIENT_ID =
+  '1045137930748-mbe2osfvmmfdsjplditaa4issounob3a.apps.googleusercontent.com';
 
 function LoginScreen({navigation}) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: CLIENT_ID,
+      offlineAccess: true,
+    });
+  }, []);
+
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      const token = userInfo.idToken;
+
+      const response = await dispatch(fetchLogin(token)).unwrap();
+
+      console.log('Response: ', response);
+
+      if (response?.success === true) {
+        navigation.replace('Splash');
+      }
+    } catch (error) {
+      console.error('Error attempting to sign in: ', error);
+    }
+  };
+
   return (
     <LinearGradient
-      colors={['#C1DCF2', '#6C9BC1', '#3A7CA5']}
+      colors={['#C1DCF2', '#3A7CA5', '#6C9BC1']}
       style={styles.background}>
       <View style={styles.container}>
         <Image
@@ -18,7 +51,7 @@ function LoginScreen({navigation}) {
           Inicia Sesion y divertite descubriendo nuevos trailers de peliculas y
           series
         </Text>
-        <Pressable onPress={() => navigation.replace('Splash')}>
+        <Pressable onPress={() => signIn()}>
           <Text style={styles.button}>Continuar con Google</Text>
         </Pressable>
       </View>
