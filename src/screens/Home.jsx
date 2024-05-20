@@ -3,9 +3,14 @@ import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useFetch} from '../hooks/useFetch';
 
 function HomeScreen() {
-  const {data} = useFetch(
-    'https://api.themoviedb.org/3/trending/all/day?language=es-ES&api_key=f14ce6e8c9f072c946514db4263511ca',
-  );
+  // const {data} = useFetch(
+  //   'https://api.themoviedb.org/3/trending/all/day?language=es-ES&api_key=f14ce6e8c9f072c946514db4263511ca',
+  // );
+
+  const {data} = useFetch(`${process.env.API_URL}/pelicula/mainlist/1`);
+  const {data: data2} = useFetch(`${process.env.API_URL}/pelicula/mainlist/2`);
+  // now playing
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nuevo trailer</Text>
@@ -41,7 +46,7 @@ function HomeScreen() {
         horizontal
       />
       <FlatList
-        data={data?.results.slice(data.results.length / 2)}
+        data={data2?.results.slice(data2.results.length / 2)}
         renderItem={({item}) => (
           <Image
             source={{

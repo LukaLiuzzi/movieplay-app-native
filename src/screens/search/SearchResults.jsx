@@ -7,11 +7,11 @@ function SearchResults({navigation, route}) {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=f14ce6e8c9f072c946514db4263511ca&language=es-ES&query=${search}&page=1&include_adult=false`,
-    )
+    fetch(`${process.env.API_URL}/pelicula/search/${search}`)
       .then(response => response.json())
-      .then(data => setSearchResults(data.results));
+      .then(data =>
+        setSearchResults(data.dataMovies.results.concat(data.dataCast.results)),
+      );
   }, [search]);
 
   const handleFilterPress = () => {
