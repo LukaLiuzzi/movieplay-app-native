@@ -41,10 +41,7 @@ function LoginScreen({navigation}) {
       colors={['#C1DCF2', '#3A7CA5', '#6C9BC1']}
       style={styles.background}>
       <View style={styles.container}>
-        <Image
-          source={require('../../assets/main-icon.jpg')}
-          style={styles.logo}
-        />
+        <Image source={require('../../assets/icon.png')} style={styles.logo} />
         <Text style={styles.title}>Movie Play</Text>
         <Text style={styles.subtitle}>Inicia Sesion</Text>
         <Text style={styles.paragraph}>
