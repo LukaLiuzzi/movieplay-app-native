@@ -9,6 +9,7 @@ const SearchBar = ({
   showFilterBtn = false,
   search,
   handleFilterPress,
+  isInputDisabled = false,
 }) => {
   return (
     <View style={styles.navigationContainer}>
@@ -18,6 +19,7 @@ const SearchBar = ({
           style={styles.input}
           value={search}
           onChangeText={text => handleChange(text)}
+          editable={!isInputDisabled}
         />
         {showSearchBtn && (
           <Pressable onPress={() => handleSearchPress()}>

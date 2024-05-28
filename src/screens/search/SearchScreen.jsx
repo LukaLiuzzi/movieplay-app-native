@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../../components/SearchBar';
 
 function SearchScreen({navigation}) {
   const [search, setSearch] = useState('');
@@ -24,7 +24,7 @@ function SearchScreen({navigation}) {
         handleSearchPress={handleSearchPress}
       />
       <Image
-        source={require('../../assets/Not_Found_illustration.png')}
+        source={require('../../../assets/Not_Found_illustration.png')}
         style={styles.image}
       />
       <Text style={styles.text}>Busca por titulo o actor</Text>

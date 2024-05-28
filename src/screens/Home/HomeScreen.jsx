@@ -1,8 +1,8 @@
 import React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
-import {useFetch} from '../hooks/useFetch';
+import {useFetch} from '../../hooks/useFetch';
 
-function HomeScreen() {
+function HomeScreen({navigation}) {
   // const {data} = useFetch(
   //   'https://api.themoviedb.org/3/trending/all/day?language=es-ES&api_key=f14ce6e8c9f072c946514db4263511ca',
   // );
@@ -15,32 +15,42 @@ function HomeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Nuevo trailer</Text>
 
-      <Image
-        source={{
-          uri: `https://image.tmdb.org/t/p/w500${data?.results[0].backdrop_path}`,
-        }}
-        style={{
-          width: 342,
-          height: 187,
-          marginHorizontal: 'auto',
-          borderRadius: 20,
-        }}
-      />
+      <Pressable
+        onPress={() =>
+          navigation.navigate('MovieScreen', {id: data?.results[0].id})
+        }>
+        <Image
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500${data?.results[0].backdrop_path}`,
+          }}
+          style={{
+            width: 342,
+            height: 187,
+            marginHorizontal: 'auto',
+            borderRadius: 20,
+          }}
+        />
+      </Pressable>
       <View style={styles.genreContainer}>
         <Text style={styles.title}>Ultimos trailers</Text>
-        <Pressable>
+        <Pressable onPress={() => navigation.navigate('GenresScreen')}>
           <Text style={styles.genreButton}>Genero: todos</Text>
         </Pressable>
       </View>
       <FlatList
         data={data?.results.slice(0, data.results.length / 2)}
         renderItem={({item}) => (
-          <Image
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
-            }}
-            style={{width: 139, height: 162, marginHorizontal: 5}}
-          />
+          <Pressable
+            onPress={() => navigation.navigate('MovieScreen', {id: item.id})}>
+            <Image
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${
+                  item.poster_path || item.backdrop_path
+                }`,
+              }}
+              style={{width: 139, height: 162, marginHorizontal: 5}}
+            />
+          </Pressable>
         )}
         keyExtractor={item => item.id.toString()}
         horizontal
@@ -48,12 +58,17 @@ function HomeScreen() {
       <FlatList
         data={data2?.results.slice(data2.results.length / 2)}
         renderItem={({item}) => (
-          <Image
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
-            }}
-            style={{width: 139, height: 162, marginHorizontal: 5}}
-          />
+          <Pressable
+            onPress={() => navigation.navigate('MovieScreen', {id: item.id})}>
+            <Image
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${
+                  item.poster_path || item.backdrop_path
+                }`,
+              }}
+              style={{width: 139, height: 162, marginHorizontal: 5}}
+            />
+          </Pressable>
         )}
         keyExtractor={item => item.id.toString()}
         horizontal

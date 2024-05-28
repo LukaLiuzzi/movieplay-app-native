@@ -19,6 +19,8 @@ function LoginScreen({navigation}) {
   }, []);
 
   const signIn = async () => {
+    navigation.replace('Splash');
+    return;
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();

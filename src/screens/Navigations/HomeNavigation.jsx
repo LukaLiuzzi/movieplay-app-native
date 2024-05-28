@@ -1,16 +1,16 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import SearchScreen from '../search/SearchScreen';
-import SearchResults from '../search/SearchResults';
-import Filters from '../search/Filters';
+import HomeScreen from '../Home/HomeScreen';
+import Genres from '../Home/Genres';
+import MovieScreen from '../Home/MovieScreen';
 
 const Stack = createNativeStackNavigator();
 
-function SearchNavigation() {
+function HomeNavigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTitle: 'Busqueda',
+        headerTitle: 'Seleccionar genero',
         headerTitleAlign: 'center',
         headerShadowVisible: false,
         headerStyle: {
@@ -25,22 +25,21 @@ function SearchNavigation() {
           width: '100%',
         },
       }}>
-      <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen
-        name="SearchResults"
-        component={SearchResults}
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="MovieScreen"
+        component={MovieScreen}
         options={{
-          headerTitle: 'Resultados de la busqueda',
-          headerTitleStyle: {fontSize: 24, fontWeight: 'bold'},
+          headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="Filters"
-        component={Filters}
-        options={{headerTitle: 'Ordernar por'}}
-      />
+      <Stack.Screen name="GenresScreen" component={Genres} />
     </Stack.Navigator>
   );
 }
 
-export default SearchNavigation;
+export default HomeNavigation;

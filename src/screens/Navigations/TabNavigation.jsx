@@ -1,6 +1,5 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../Home';
 import FavoritesScreen from '../Favorites';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,6 +7,7 @@ import AntDesignicons from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AccountNavigation from './AccountNavigation';
 import SearchNavigation from './SearchNavigation';
+import HomeNavigation from './HomeNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,9 +31,9 @@ function TabNavigation() {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigation}
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: props => <LogoTitle {...props} />,
           headerTitleAlign: 'center',
           headerStyle: {
