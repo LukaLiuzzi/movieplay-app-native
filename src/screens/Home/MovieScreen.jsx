@@ -2,11 +2,17 @@ import React from 'react';
 import {FlatList, Image, Pressable, Text, View} from 'react-native';
 import {useFetch} from '../../hooks/useFetch';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Error from '../../components/Error';
 
 const MovieScreen = ({navigation, route}) => {
   const {id} = route.params;
-  const {data} = useFetch(`${process.env.API_URL}/pelicula/${id}`);
-  console.log(id);
+  const {data, loading, error} = useFetch(
+    `${process.env.API_URL}/pelicula/${id}`,
+  );
+
+  if (error) {
+    return <Error message="Ocurrio un error al cargar el trailer" />;
+  }
   return (
     <View
       style={{
@@ -94,15 +100,15 @@ const MovieScreen = ({navigation, route}) => {
           </Pressable>
           <Pressable
             style={{backgroundColor: '#0B3750', padding: 5, borderRadius: 5}}>
-            <Text style={{color: 'white', fontSize: 14}}>Ver</Text>
+            <Ionicons name="heart" size={20} color="white" />
           </Pressable>
           <Pressable
             style={{backgroundColor: '#0B3750', padding: 5, borderRadius: 5}}>
-            <Text style={{color: 'white', fontSize: 14}}>Ver</Text>
+            <Ionicons name="star" size={20} color="white" />
           </Pressable>
           <Pressable
             style={{backgroundColor: '#0B3750', padding: 5, borderRadius: 5}}>
-            <Text style={{color: 'white', fontSize: 14}}>Ver</Text>
+            <Ionicons name="share-social" size={20} color="white" />
           </Pressable>
         </View>
       </View>

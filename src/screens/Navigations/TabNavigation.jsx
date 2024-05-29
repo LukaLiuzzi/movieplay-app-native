@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import FavoritesScreen from '../Favorites';
+import FavoritesScreen from '../FavoritesScreen';
 import {Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesignicons from 'react-native-vector-icons/AntDesign';
@@ -28,6 +28,11 @@ function TabNavigation() {
         tabBarInactiveTintColor: '#fff',
         tabBarActiveBackgroundColor: '#3A7CA5',
         tabBarInactiveBackgroundColor: '#3A7CA5',
+        tabBarStyle: {
+          borderTopColor: '#3A7CA5',
+          borderTopWidth: 0,
+          height: 60,
+        },
       }}>
       <Tab.Screen
         name="Home"
@@ -78,11 +83,24 @@ function TabNavigation() {
         name="Favorites"
         component={FavoritesScreen}
         options={{
+          headerShown: true,
+          headerTitle: 'Favoritos',
+          headerStyle: {
+            backgroundColor: '#C1DCF2',
+            height: 101, // Increase height
+          },
+          headerTitleAlign: 'center',
+          headerTintColor: '#0B3750',
+          headerTitleStyle: {
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            width: '100%',
+          },
           tabBarIcon: ({color, size}) => (
             <Ionicons name="heart-outline" color={color} size={size} />
           ),
           tabBarLabel: () => null,
-          headerTitleAlign: 'center',
         }}
       />
       <Tab.Screen

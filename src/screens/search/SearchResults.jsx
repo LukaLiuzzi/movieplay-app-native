@@ -1,21 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, Text, View} from 'react-native';
 import SearchBar from '../../components/SearchBar';
+import Error from '../../components/Error';
 
 function SearchResults({navigation, route}) {
   const {search} = route.params;
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(5);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${process.env.API_URL}/pelicula/search/${search}`)
+    setIsRefreshing(true);
+    fetch(
+      `${process.env.API_URL}/pelicula/search/${search}?page=${currentPage}`,
+    )
       .then(response => response.json())
-      .then(data =>
-        setSearchResults(data.dataMovies.results.concat(data.dataCast.results)),
-      )
-      .catch(error => {});
-  }, [search]);
+      .then(data => {
+        setSearchResults(data.dataMovies.results.concat(data.dataCast.results));
+        setTotalPages(data.dataMovies.total_pages);
+      })
+      .catch(err => {
+        setError(err);
+      })
+      .finally(() => {
+        setIsRefreshing(false);
+      });
+  }, [search, currentPage]);
 
   const handleFilterPress = () => {
     navigation.navigate('Filters');
@@ -60,6 +72,10 @@ function SearchResults({navigation, route}) {
 
     return buttons;
   };
+
+  if (error) {
+    return <Error message="Ocurrio un error al cargar el trailer" />;
+  }
 
   return (
     <View
@@ -112,30 +128,35 @@ function SearchResults({navigation, route}) {
       ) : (
         <>
           <FlatList
+            isRefreshing={isRefreshing}
             data={searchResults}
             style={{marginTop: 50}}
             renderItem={({item}) => (
-              <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                <Pressable
-                  onPress={() =>
-                    navigation.navigate('MovieScreen', {id: item.id})
-                  }>
-                  <Image
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                    }}
-                    style={{
-                      width: 113,
-                      height: 148,
-                      marginHorizontal: 10,
-                      borderRadius: 10,
-                    }}
-                  />
-                  <Text style={{maxWidth: 85, marginBottom: 10}}>
-                    {item.title}
-                  </Text>
-                </Pressable>
-              </View>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('MovieScreen', {id: item.id})
+                }
+                style={{flexDirection: 'column', alignItems: 'center'}}>
+                <Image
+                  source={{
+                    uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                  }}
+                  style={{
+                    width: 113,
+                    height: 148,
+                    marginHorizontal: 10,
+                    borderRadius: 10,
+                  }}
+                />
+                <Text
+                  style={{
+                    maxWidth: 85,
+                    marginBottom: 10,
+                    textAlign: 'center',
+                  }}>
+                  {item.title}
+                </Text>
+              </Pressable>
             )}
             keyExtractor={item => item.id.toString()}
             numColumns={3}

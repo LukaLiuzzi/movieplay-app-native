@@ -1,16 +1,25 @@
 import React from 'react';
 import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useFetch} from '../../hooks/useFetch';
+import Error from '../../components/Error';
 
 function HomeScreen({navigation}) {
   // const {data} = useFetch(
   //   'https://api.themoviedb.org/3/trending/all/day?language=es-ES&api_key=f14ce6e8c9f072c946514db4263511ca',
   // );
 
-  const {data} = useFetch(`${process.env.API_URL}/pelicula/mainlist/1`);
-  const {data: data2} = useFetch(`${process.env.API_URL}/pelicula/mainlist/2`);
-  // now playing
+  const {data, loading, error} = useFetch(
+    `${process.env.API_URL}/pelicula/mainlist/1`,
+  );
+  const {
+    data: data2,
+    loading: loading2,
+    error: error2,
+  } = useFetch(`${process.env.API_URL}/pelicula/mainlist/2`);
 
+  if (error || error2) {
+    return <Error message="Ocurrio un error al cargar los trailers" />;
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nuevo trailer</Text>
@@ -38,6 +47,7 @@ function HomeScreen({navigation}) {
         </Pressable>
       </View>
       <FlatList
+        isRefreshing={loading}
         data={data?.results.slice(0, data.results.length / 2)}
         renderItem={({item}) => (
           <Pressable
@@ -56,6 +66,7 @@ function HomeScreen({navigation}) {
         horizontal
       />
       <FlatList
+        isRefreshing={loading2}
         data={data2?.results.slice(data2.results.length / 2)}
         renderItem={({item}) => (
           <Pressable
