@@ -30,6 +30,24 @@ const MovieScreen = ({navigation, route}) => {
           onPress={() => navigation.goBack()}>
           <Ionicons name="chevron-back-circle" size={30} color="#0B3750" />
         </Pressable>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 20,
+            left: 20,
+            zIndex: 11,
+            flexDirection: 'row',
+            gap: 5,
+            padding: 5,
+            paddingHorizontal: 10,
+            borderRadius: 30,
+            backdropFilter: 'blur(10px)',
+          }}>
+          <Ionicons name="star" size={20} color="#FFD700" />
+          <Text style={{color: '#0B3750', fontSize: 16, fontWeight: 'bold'}}>
+            {(data?.vote_average / 2).toFixed(0)}
+          </Text>
+        </View>
         <Image
           source={{
             uri: `https://image.tmdb.org/t/p/w500${data?.backdrop_path}`,
