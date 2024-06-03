@@ -1,8 +1,13 @@
 import React from 'react';
-import {FlatList, Image, Pressable, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {useFetch} from '../../hooks/useFetch';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Error from '../../components/Error';
+import MovieActionBtn from '../../components/MovieActionBtn';
+import MovieDescription from '../../components/MovieDescription';
+import MovieDirectors from '../../components/MovieDirectors';
+import MovieActors from '../../components/MovieActors';
+import MoviePoster from '../../components/MoviePoster';
+import MovieInfo from '../../components/MovieInfo';
 
 const MovieScreen = ({navigation, route}) => {
   const {id} = route.params;
@@ -14,60 +19,12 @@ const MovieScreen = ({navigation, route}) => {
     return <Error message="Ocurrio un error al cargar el trailer" />;
   }
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
         backgroundColor: '#C1DCF2',
       }}>
-      <View style={{position: 'relative'}}>
-        <Pressable
-          style={{
-            position: 'absolute',
-            top: 20,
-            left: 20,
-            zIndex: 10,
-          }}
-          onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back-circle" size={30} color="#0B3750" />
-        </Pressable>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 20,
-            left: 20,
-            zIndex: 11,
-            flexDirection: 'row',
-            gap: 5,
-            padding: 5,
-            paddingHorizontal: 10,
-            borderRadius: 30,
-            backdropFilter: 'blur(10px)',
-          }}>
-          <Ionicons name="star" size={20} color="#FFD700" />
-          <Text style={{color: '#0B3750', fontSize: 16, fontWeight: 'bold'}}>
-            {(data?.vote_average / 2).toFixed(0)}
-          </Text>
-        </View>
-        <Image
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${data?.backdrop_path}`,
-          }}
-          style={{width: '100%', height: 337, objectFit: 'cover'}}
-        />
-        <Image
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${data?.poster_path}`,
-          }}
-          style={{
-            width: 120,
-            height: 180,
-            position: 'absolute',
-            top: 150,
-            right: 10,
-            zIndex: 10,
-          }}
-        />
-      </View>
+      <MoviePoster data={data} navigation={navigation} />
       <View>
         <Text
           style={{
@@ -79,26 +36,7 @@ const MovieScreen = ({navigation, route}) => {
           }}>
           {data?.title}
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingHorizontal: 40,
-          }}>
-          <Text>{new Date(data?.release_date).getFullYear()}</Text>
-          <Text> | </Text>
-          <Text>
-            {Math.floor(data?.runtime / 60)}h {data?.runtime % 60} min
-          </Text>
-          <Text> | </Text>
-          <Text>
-            {data?.genres
-              .map(el => el.name)
-              .slice(0, 2)
-              .join(' / ')}
-          </Text>
-        </View>
+        <MovieInfo data={data} />
         <View
           style={{
             flexDirection: 'row',
@@ -107,96 +45,20 @@ const MovieScreen = ({navigation, route}) => {
             marginVertical: 10,
             gap: 10,
           }}>
-          <Pressable
-            style={{
-              backgroundColor: '#0B3750',
-              padding: 5,
-              borderRadius: 5,
-              paddingHorizontal: 40,
-            }}>
-            <Text style={{color: 'white', fontSize: 14}}>Trailer</Text>
-          </Pressable>
-          <Pressable
-            style={{backgroundColor: '#0B3750', padding: 5, borderRadius: 5}}>
-            <Ionicons name="heart" size={20} color="white" />
-          </Pressable>
-          <Pressable
-            style={{backgroundColor: '#0B3750', padding: 5, borderRadius: 5}}>
-            <Ionicons name="star" size={20} color="white" />
-          </Pressable>
-          <Pressable
-            style={{backgroundColor: '#0B3750', padding: 5, borderRadius: 5}}>
-            <Ionicons name="share-social" size={20} color="white" />
-          </Pressable>
+          <MovieActionBtn text={'Trailer'} styles={{paddingHorizontal: 40}} />
+          <MovieActionBtn icon={'heart-outline'} size={20} color={'white'} />
+          <MovieActionBtn icon={'star-outline'} size={20} color={'white'} />
+          <MovieActionBtn icon={'share-social'} size={20} color={'white'} />
         </View>
       </View>
-      <View>
-        <Text
-          style={{
-            color: '#0B3750',
-            fontSize: 12,
-            fontWeight: 'bold',
-            paddingHorizontal: 20,
-            marginTop: 10,
-            marginBottom: 5,
-            textTransform: 'uppercase',
-          }}>
-          "{data?.tagline || data?.title}"
-        </Text>
-        <Text
-          style={{
-            color: '#0B3750',
-            fontSize: 12,
-            paddingHorizontal: 20,
-          }}>
-          {data?.overview}
-        </Text>
-      </View>
+      <MovieDescription data={data} />
       {data?.directing && (
         <View style={{paddingHorizontal: 20, marginVertical: 20, gap: 10}}>
-          <Text style={{color: '#0B3750', fontSize: 12, fontWeight: '500'}}>
-            DIRIGIDO POR
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            {data?.directing.map(el => (
-              <Text key={el.id} style={{fontSize: 14, fontWeight: 700}}>
-                {el.name}
-              </Text>
-            ))}
-          </View>
-          {data?.acting && (
-            <View>
-              <Text style={{color: '#0B3750', fontSize: 12, fontWeight: '500'}}>
-                ELENCO
-              </Text>
-              <FlatList
-                data={data?.acting}
-                renderItem={({item}) => (
-                  <Image
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/w500${item.profile_path}`,
-                    }}
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 10,
-                      marginTop: 10,
-                      marginRight: 10,
-                    }}
-                  />
-                )}
-                keyExtractor={item => item.id.toString()}
-                horizontal
-              />
-            </View>
-          )}
+          <MovieDirectors data={data} />
+          {data?.acting && <MovieActors data={data} />}
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

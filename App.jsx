@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import StackNavigation from './src/screens/Navigations/StackNavigation.jsx';
-import TabNavigation from './src/screens/Navigations/TabNavigation.jsx';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './src/redux/configureStore.js';
@@ -20,7 +19,6 @@ function App() {
           <NavigationContainer>
             <StatusBar barStyle="dark-content" backgroundColor="#3A7CA5" />
             <StackNavigation />
-            {/* <TabNavigation /> */}
           </NavigationContainer>
         </SafeAreaView>
       </PersistGate>

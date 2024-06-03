@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Swiper from 'react-native-swiper';
+import SplashSlide from '../components/SplashSlide';
 
 const SplashScreen = ({navigation}) => {
   const swiperRef = useRef(null);
@@ -48,33 +49,19 @@ const SplashScreen = ({navigation}) => {
         showsButtons={false}
         loop={false}
         onIndexChanged={index => setIsLastSlide(index === 2)}>
-        <View style={styles.slide}>
-          <Image
-            source={require('../../assets/splash1.jpg')}
-            style={styles.image}
-          />
-          <Text style={styles.imageText}>
-            Explora los avances más impactantes del cine
-          </Text>
-        </View>
-        <View style={styles.slide}>
-          <Image
-            source={require('../../assets/splash2.jpg')}
-            style={styles.image}
-          />
-          <Text style={styles.imageText}>
-            Descubre, puntúa y guarda tus avances favoritos del cine
-          </Text>
-        </View>
-        <View style={styles.slide}>
-          <Image
-            source={require('../../assets/splash3.jpg')}
-            style={styles.image}
-          />
-          <Text style={styles.imageText}>
-            ¡La experiencia del cine en tus manos!
-          </Text>
-        </View>
+        <SplashSlide
+          img={require('../../assets/splash1.jpg')}
+          text="Explora los avances más impactantes del cine"
+        />
+        <SplashSlide
+          img={require('../../assets/splash2.jpg')}
+          text="Descubre, puntúa y guarda tus avances favoritos del cine"
+        />
+
+        <SplashSlide
+          img={require('../../assets/splash3.jpg')}
+          text="¡La experiencia del cine en tus manos!"
+        />
       </Swiper>
       <View style={styles.bottomContainer}>
         <TouchableOpacity

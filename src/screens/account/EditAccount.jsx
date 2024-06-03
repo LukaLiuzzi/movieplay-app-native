@@ -1,37 +1,18 @@
 import React from 'react';
 import {
   Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import AccountAvatar from '../../components/AccountAvatar';
 
 function EditAccount({navigation}) {
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-        }}>
-        <Image
-          source={require('../../../assets/accountAvatar.png')}
-          style={styles.avatar}
-        />
-        <Ionicons
-          name="camera"
-          size={24}
-          color="#262626"
-          style={{marginLeft: -20, zIndex: 1}}
-        />
-      </View>
+      <AccountAvatar />
 
       <Text style={styles.username}>Antogace</Text>
 
@@ -121,11 +102,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#C1DCF2',
     paddingHorizontal: 30,
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    marginTop: 40,
   },
   username: {
     fontSize: 22,

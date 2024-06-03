@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, Text, View} from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import Error from '../../components/Error';
+import MovieCard from '../../components/MovieCard';
 
 function SearchResults({navigation, route}) {
   const {search} = route.params;
@@ -132,31 +133,14 @@ function SearchResults({navigation, route}) {
             data={searchResults}
             style={{marginTop: 50}}
             renderItem={({item}) => (
-              <Pressable
-                onPress={() =>
-                  navigation.navigate('MovieScreen', {id: item.id})
-                }
-                style={{flexDirection: 'column', alignItems: 'center'}}>
-                <Image
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                  }}
-                  style={{
-                    width: 113,
-                    height: 148,
-                    marginHorizontal: 10,
-                    borderRadius: 10,
-                  }}
-                />
-                <Text
-                  style={{
-                    maxWidth: 85,
-                    marginBottom: 10,
-                    textAlign: 'center',
-                  }}>
-                  {item.title}
-                </Text>
-              </Pressable>
+              <MovieCard
+                item={item}
+                navigation={navigation}
+                width={113}
+                height={148}
+                styles={{marginHorizontal: 10, borderRadius: 10}}
+                title={true}
+              />
             )}
             keyExtractor={item => item.id.toString()}
             numColumns={3}

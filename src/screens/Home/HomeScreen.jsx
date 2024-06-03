@@ -1,7 +1,9 @@
 import React from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useFetch} from '../../hooks/useFetch';
 import Error from '../../components/Error';
+import MovieCard from '../../components/MovieCard';
+import Title from '../../components/Title';
 
 function HomeScreen({navigation}) {
   // const {data} = useFetch(
@@ -22,64 +24,48 @@ function HomeScreen({navigation}) {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Nuevo trailer</Text>
+      <Title text={'Nuevo trailer'} styles={styles} />
 
-      <Pressable
-        onPress={() =>
-          navigation.navigate('MovieScreen', {id: data?.results[0].id})
-        }>
-        <Image
-          source={{
-            uri: `https://image.tmdb.org/t/p/w500${data?.results[0].backdrop_path}`,
-          }}
-          style={{
-            width: 342,
-            height: 187,
-            marginHorizontal: 'auto',
-            borderRadius: 20,
-          }}
-        />
-      </Pressable>
+      <MovieCard
+        item={data?.results[0]}
+        width={342}
+        height={187}
+        styles={{
+          marginHorizontal: 'auto',
+          borderRadius: 20,
+        }}
+        navigation={navigation}
+      />
       <View style={styles.genreContainer}>
-        <Text style={styles.title}>Ultimos trailers</Text>
+        <Title text={'Ultimos trailers'} styles={styles} />
         <Pressable onPress={() => navigation.navigate('GenresScreen')}>
           <Text style={styles.genreButton}>Genero: todos</Text>
         </Pressable>
       </View>
       <FlatList
         isRefreshing={loading}
-        data={data?.results.slice(0, data.results.length / 2)}
+        data={data?.results}
         renderItem={({item}) => (
-          <Pressable
-            onPress={() => navigation.navigate('MovieScreen', {id: item.id})}>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500${
-                  item.poster_path || item.backdrop_path
-                }`,
-              }}
-              style={{width: 139, height: 162, marginHorizontal: 5}}
-            />
-          </Pressable>
+          <MovieCard
+            item={item}
+            width={140}
+            height={160}
+            navigation={navigation}
+          />
         )}
         keyExtractor={item => item.id.toString()}
         horizontal
       />
       <FlatList
         isRefreshing={loading2}
-        data={data2?.results.slice(data2.results.length / 2)}
+        data={data2?.results}
         renderItem={({item}) => (
-          <Pressable
-            onPress={() => navigation.navigate('MovieScreen', {id: item.id})}>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500${
-                  item.poster_path || item.backdrop_path
-                }`,
-              }}
-              style={{width: 139, height: 162, marginHorizontal: 5}}
-            />
-          </Pressable>
+          <MovieCard
+            item={item}
+            width={140}
+            height={160}
+            navigation={navigation}
+          />
         )}
         keyExtractor={item => item.id.toString()}
         horizontal
@@ -93,12 +79,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#C1DCF2',
     paddingHorizontal: 15,
-  },
-  title: {
-    color: '#0B3750',
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginVertical: 20,
   },
   genreContainer: {
     flexDirection: 'row',
