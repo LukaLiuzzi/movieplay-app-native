@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import SearchBar from '../../components/SearchBar';
 import Error from '../../components/Error';
 import MovieCard from '../../components/MovieCard';
@@ -20,6 +28,20 @@ function SearchScreen({navigation}) {
   const [totalPages, setTotalPages] = useState(1);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+
+  const filters = {
+    'Mas populares': array => array.sort((a, b) => b.popularity - a.popularity),
+    'Fecha de publicacion: Mas nuevo a mas viejo': array =>
+      array.sort((a, b) => new Date(b.release_date) - new Date(a.release_date)),
+    'Fecha de publicacion: Mas viejo a mas nuevo': array =>
+      array.sort((a, b) => new Date(a.release_date) - new Date(b.release_date)),
+    'Calificacion: De mayor a menor': array =>
+      array.sort((a, b) => b.vote_average - a.vote_average),
+    'Calificacion: De menor a mayor': array =>
+      array.sort((a, b) => a.vote_average - b.vote_average),
+  };
 
   useEffect(() => {
     if (search === '') {
@@ -32,7 +54,7 @@ function SearchScreen({navigation}) {
     )
       .then(response => response.json())
       .then(data => {
-        setSearchResults(data.dataMovies.results.concat(data.dataCast.results));
+        setSearchResults(data.dataCast.results.concat(data.dataMovies.results));
         setTotalPages(data.dataMovies.total_pages);
       })
       .catch(err => {
@@ -43,12 +65,57 @@ function SearchScreen({navigation}) {
       });
   }, [search, currentPage]);
 
+  const handleFilter = newFilter => {
+    setSelectedFilter(newFilter);
+    const dataWithFilters = filters[newFilter](searchResults);
+    setSearchResults([...dataWithFilters]);
+    navigation.goBack();
+  };
+
   const handleFilterPress = () => {
-    navigation.navigate('Filters');
+    navigation.navigate('Filters', {handleFilter, selectedFilter});
   };
 
   const handlePageClick = page => {
     setCurrentPage(page);
+  };
+
+  const loadMoreData = async () => {
+    if (isRefreshing || !hasMore) return;
+
+    setIsRefreshing(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.API_URL}/pelicula/search/${search}?page=${
+          currentPage + 1
+        }`,
+      );
+      const data = await response.json();
+      setSearchResults([...searchResults, ...data.dataMovies.results]);
+      setTotalPages(data.dataMovies.total_pages);
+      setCurrentPage(currentPage + 1);
+      setHasMore(data.dataMovies.page < data.dataMovies.total_pages);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const renderFlatListFooter = () => {
+    if (!isRefreshing) return null;
+
+    return (
+      <View
+        style={{
+          padding: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <ActivityIndicator size="large" color="#3A7CA5" />
+      </View>
+    );
   };
 
   const renderPaginationButtons = () => {
@@ -179,6 +246,9 @@ function SearchScreen({navigation}) {
             )}
             keyExtractor={item => item.id.toString()}
             numColumns={3}
+            onEndReached={loadMoreData}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={renderFlatListFooter}
           />
         </>
       )}
